@@ -1,0 +1,15 @@
+#!/usr/bin/dc
+?
+[p]s2
+
+[lip/dli%0=1dvsr]s1
+2si
+d2%0=1
+3si
+dv
+sr
+
+[dli%0=1lrli2+dsi!>.]ds.
+x
+
+d1<2
