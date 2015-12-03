@@ -32,7 +32,7 @@ si			# Save the number of students
 [leSlq]sS		# Should quit
 
 # T() -- Median Calc Part III, Averages middle values
-[lhkLldSl+2/0k]sT		# Pop the next value, restore it, average it
+[lhkLldSl+2/]sT		# Pop the next value, restore it, average it
 
 # U() -- Save input in sorted stack for median calculations
 [lf1+sf			# Increment loop counter
