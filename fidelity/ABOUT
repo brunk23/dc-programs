@@ -13,7 +13,7 @@ class.  I was already entering scores once and didn't see why I should
 duplicate effort by entering all the grades again to find the class
 average.  So, I threw in a couple variables to keep track of a running
 average and print it out.  Then I could just use that after entering
-the last score.
+the last score.  This version is called "grader"
 
 This was good, until the next school year.  Now, we are told that we
 need to report on each test's "fidelity."  Fidelity is defined as a
