@@ -1,0 +1,40 @@
+#!/bin/sh
+# i = current factor we're working with
+# r = sqrt(#), represents the highest possible factor we'll test
+# a() = function we call when we find a working factor
+# m() = main body function
+# p() = print function for the very last factor
+DC=`which dc`
+NUMBER=0
+
+if [ $# -gt 0 ]; then
+	NUMBER=$1;
+fi
+
+${DC} -e "${NUMBER}[[Which number? ]n?]sgd1!<g
+[p]sp		# print function for last factor
+
+# a(), top of stack is current # we're working with
+[lip		# print most recently known working factor
+/d		# divide the # by this factor, this is our new #
+li%		# check to see if we can divide by i again
+0=a		# if we can, loop to print it and reduce our # again
+dvsr		# r = sqrt(#), reset our upper bounds
+]sa
+
+2si		# First factor we test is 2
+d2%		# Test if we can divide by 2
+0=a		# if we can, call a()
+3si		# set i = 3 for the main loop
+dvsr		# r = sqrt(#), set the upper bounds
+
+[dli%		# can we divide # by i?
+0=a		# if we can, call a()
+lr		# load our upper bounds for the test
+li2+
+dsi		# increment i by 2, and save it 
+!>m		# if our new i is not greater than r, loop m()
+]dsmx		# save m() and then call it
+
+d
+1<p		# if we have a number left that is greater than 1, print it"

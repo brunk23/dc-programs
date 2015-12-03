@@ -1,0 +1,10 @@
+This program will print the prime factors of a given number.  This is
+not my original creation. 
+
+http://www.cs.unh.edu/~charpov/Programming/DC/ is the location I originally
+saw this bit of obsfucated dc.  It was neat, though, and prime factorization
+is a common task at my grade level, so I kept it.
+
+I did end up rewriting it without all the, intentionally confusing, register
+name choices and with comments.  It was put into a shell script. I have
+included that version as factor-commented
