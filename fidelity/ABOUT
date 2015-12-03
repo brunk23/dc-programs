@@ -1,0 +1,89 @@
+This program is the end result of a series of little additions.
+
+I almost always have a terminal open with dc running, for quick
+calculations, and I would often use it when grading tests. I wrote
+a macro to save the number of questions and loop. It would ask for
+the amount correct and output the percentage for the test. This became
+my default way of grading papers and tests.
+
+Eventually, we were told that we needed to have a class average for
+each test so that we could graph students compared to the rest of the
+class.  I was already entering scores once and didn't see why I should
+duplicate effort by entering all the grades again to find the class
+average.  So, I threw in a couple variables to keep track of a running
+average and print it out.  Then I could just use that after entering
+the last score.
+
+This was good, until the next school year.  Now, we are told that we
+need to report on each test's "fidelity."  Fidelity is defined as a
+certain percentage of the students scoring higher than a specific
+percentage on the assignment.  It's not that complicated to add.  I just
+need to compare each score to the required percentage and keep track
+of the number of students who score it.  Then I can calculate if the
+class met fidelity for the test.
+
+So, now I had a "grader" that had shifted into a tool that also told me
+my class average, for graphs, and quickly let me know if the grade was
+one that could be graphed (it had to meet fidelity to be graphed). It
+really pushed the bounds of what dc is normally expected to do, but it
+worked and I was used to it.
+
+The next year, they also asked for us to report the median score on
+each assignment. This was, by far, the most complicated task to get
+working with the limited data options (register or stack) in dc. If I
+hadn't already put so much work into this program and been used to
+using it, I would have done it in another language.  But, I figured
+it couldn't be "that" hard, if I used a sorted stack to hold the scores.
+
+I learned a lot about how dc handles stacks and unwinds them as macros
+return.  The following is some pseudo-code to help explain how this
+functions
+
+# R() -- This is called to push the new value on the list
+# either because it's higher than everything on the list already
+# or because we've found a value higher than it and are about to
+# start with the UNWIND HALF of U()
+[
+ 1 sg    # make g equal 1
+ le Sl   # push the new value onto the list
+]sR
+
+
+
+# S() -- Saves first score and quits the sort, if we don't quit
+# we end up with a duplicate copy of the first score entered on
+# the list
+[
+ le Sl   # push the new value onto the list
+ q       # makes U return without finishing
+]sS
+
+# U() -- Save input in sorted stack for median calculations
+# This macro really abuses the working stack and recursion
+[
+     # BEGIN WINDUP HALF OF U()
+ lf 1 + sf   # Increment loop counter
+
+ la 1 =S     # if this is the first score, push it and exit U()
+
+ lf la =R    # have we looked at all the scores on the list? if yes 
+             # then we call R(), the new value goes on the list and
+	     # immediately gets popped off by the next line, which
+	     # will make the test fail and start the UNWIND HALF
+
+ Ll d        # pop the current value off the list (make a copy)
+
+ le >U       # if ( new value > current value ) call U() again and
+             # keep winding values up the stack, we will unwind them
+	     # back onto the list when we know where the new value goes
+
+     # BEGIN UNWIND HALF OF U()
+             # the new value was <= current value on the list
+
+ Sl          # put the current value back on the list
+             # this part will run once for each time we called U()
+
+             # if g is 1, we have put the value on the list already
+ lg 0 =R     # if we haven't call R() to put it on the list here
+             # R() makes g = 1 so it only happens one time
+]sU

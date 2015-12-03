@@ -1,16 +1,17 @@
 #!/usr/bin/dc
-# grader.dc [Version 4]
-75	# % of students required to make Fidelity
-70	# Score on test to count for Fidelity
-3	# Precision of calculations
+75			# % of students to make Fidelity
+70			# Score on test to make fidelity
+3			# Precision of calculations
 
 # VARIABLE LIST:
 # a: number of scores entered
 # b: sum of percents of all scores entered
 # c: number of students making fidelity
-# e: number of scores to pop to find the median
+# e: number of scores to pop to find the median or new score
+#    to add to the list of scores
 # f: loop counter
-# g: boolean used by sort and median macros for flow control
+# g: boolean used by sort and median macros to tell if we saved
+#    the new value on the stack of sorted scores yet
 # h: the precision of the calculations
 # i: percent of class needed for fidelity
 # j: score needed by student to make fidelity
@@ -40,7 +41,8 @@ lfla=R			# If a==f R()
 Lldle			# Pop bottom of l
 >U			# if ( e > l ) U()
 Sl
-lg0=R			# Put largest value at top
+lg0=R			# Put new value at this location, if
+			# we haven't put it on the stack yet.
 ]sU
 
 # V() -- Median Calc Part II
@@ -54,39 +56,39 @@ le!<W			# Loop while midpoint !< counter
 Sl			# Push values back on stack as we unfold
 ]sW			# W()
 
-# X() -- Pretty Print Helper
+# X() -- Pretty print helper
 [[Not ]n]sX		# Pretty Print command
 
-# Y() -- Increment Student Count
-[lc1+sc]sY		# Increment count passing
+# Y() -- Students meeting fidelity
+[lc1+sc]sY		# Increment passing count
 
 # Z() -- MAIN LOOP
-[lhk			# Set the precision
-[Score: (q[uit]): ]n?	# Prompt
-100*ln/dd		# Turn input into percent, make copy for comp
-lj!>Y			# if(min_score!>percent) then Y()
+[lhk			# Set the precision based on the saved value
+[Score: (q[uit]): ]n	# Print the input prompt
+?ln/100*		# Get score, divide by n, multiply by 100
+ddlj!>Y			# if(t!>inp) then Y()
 [
 Last: ]nn
-la1+dsa			# Increment count, save, keep copy to print
-[	Count: ]nn	# Print the count
+la1+dsa			# Get student count, increment and save
+[	Count: ]nn	# Print the current count
 0dsfsgd			# MEDIAN FUNCTION (stack holds curr value)
 selUx			# call U() (saves number in stack)
-lb+dsb			# Add percent to running total
+lb+dsb			# Total points earned by class
 la/			# Calculate the average for class
 [	Average: ]nn	# Print the class average
-lilcd			# Load Student_Percent and student_count
+lilcd			# Put i and c on the stack, two copies of c
 [%
-]n
-ljn[+%: ]nn		# Print # of students scoring j or higher
+]nljn[+%: ]nn		# Print # of students scoring S or higher
 [	Median: ]n
 0k1sf			# Reset precision and set counter to 1
 la2%la2/+se		# Set variable to the count
 lWxlhk			# W() (find median) reset precision after
 [	Does ]n
-100*la/<X		# if(numb*100)/count < Student_Percent X()
+la/100*			# Calculate the % meeting Fidelity
+<X			# if(%<i) then X()
 [Meet Fidelity
 
 ]P			# Pretty print
 lZx			# LOOP
-]sZ			# Define Z()
+]sZ			# end Z()
 lZx			# enter main program
