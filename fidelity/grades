@@ -1,0 +1,42 @@
+#!/usr/bin/dc
+##############################################################################
+# <brunellek@gmail.com> wrote this file. As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return. Kevin Brunelle 
+##############################################################################
+ 
+###################################################
+###           SIMPLE GRADE CALCULATOR           ###
+###     ALSO DISPLAYS RUNNING CLASS AVERAGE     ###
+###################################################
+
+#####
+# This file is mostly comments. And those things that aren't might look
+# like line noise. But they're important. Don't play with them unless you
+# know what you're doing and want to accomplish. If you do play with them
+# and break something, don't blame me.
+#####
+
+### Number of digits
+2k
+
+### Prompt for and store the number of questions / possible points
+[What is the total number of problems: ]n?sp
+
+### These values are used for calculating a class average
+0dscst
+
+### f(){ -- function to loop and calculate averages
+[[
+Number correct (q to quit): ]n?		# Prompt
+dlt+st100*lp/				# Calculate average +total
+[
+]P					# Formatting Space
+[The average is: ]np			# Display stud. avge
+1lc+sclt100*lclp*/			# Calculate class average
+[The class average is: ]nn		# Display class avg.
+[ (]nlcn[)]p				# Display total number of grades
+lfx]sf					# f() }
+
+### Load and execute f()
+lfx
