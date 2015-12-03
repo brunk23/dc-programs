@@ -1,3 +1,5 @@
 I decided to use dc to make a program that will tell you all the possible
 Friday the 13ths between two given dates.  This is the obsfucated version.
-I will go back and create a commented version at a later time.
+
+I have included a commented version of the code, that explains how it works.
+Unfortunately, even commented, the code is still not easy to read.

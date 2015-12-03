@@ -1,0 +1,128 @@
+#!/usr/bin/dc
+# This will find all the Friday the 13 dates between any two given dates.
+# Obviously, this fails when the changeover from Julian to Gregorian happened
+# because I don't check for that. Still, it works for all practical dates.
+
+0 k		# we don't want any decimal points
+0 sc		# c keeps track of if a month has a Friday the 13th
+  		# January 2012 had one, it's our reference point
+
+# Y(), X(), W(), and U() are all used to adjust months/years for
+# leap year purposes.
+[1-]sY
+[2-]sX
+[3-]sW
+[1+]sU
+
+# S(), pretty print a date for Friday the 13th
+[
+ lg n
+ [/13/]n
+ lf p
+]sS
+
+# Can the year be divided by 4? If so, subtract 2 from the
+# value on the stack, it's a leap year
+[
+ lf 4 % 0 =X
+]sT
+
+# This is our test for leap years.
+[
+ lf 4 % 0 <W      # if the year is not divisible by 4, stack -3      (no LEAP)
+ lf 100 % 0 =W    # if the year is divisible by 100, stack -3        (no LEAP)
+ lf 400 % 0 =U	  # if the year is divisible by 400, stack +1      (oops LEAP)
+ lf 100 % 0 <T    # if the year is divisible by 4 but not 100, stack -2 (LEAP) 
+]sV
+
+# This function keeps track of what day of the week our current
+# month starts on
+[
+ lc 31		# assume 31 days per month
+ lg 2 =V	# subtract 2 or 3, if Feb, depending on leap year
+ lg 4 =Y	# -1 for April
+ lg 6 =Y	# -1 for June
+ lg 9 =Y	# -1 for September
+ lg 11 =Y	# -1 for November
+ + 7 % d sc	# add to old c, mod 7, copy and store back in c
+]sR
+
+# Moving down a year
+[
+ lf 1 - sf	# subtract 1 from the working year
+ lc 368		# load current count and 368 for days in a year
+ lV x		# Check if a leap year to subtract 2 or 3.
+ - 7 % 7 + sc	# subtract from old c, mod 7, add 7 and store back in c
+ lf la <Q  	# if a < f, repeat and move down another year
+]sQ
+
+# Moving up a year
+[
+ 368		# 368 - 3 = 365, 368 - 2 = 366
+ lV x		# Check if a leap year to subtract 2 or 3.
+ lc + 7 % sc	# add to old c, mod 7, copy and store back in c
+ lf 1 + d sf	# add 1 to the working year
+ la >P	  	# if a > f, repeat and move up another year
+]sP
+
+# Go up one month
+[
+ lR x		# call R() to count the days for this month
+ lg 1 + d sg	# Add 1 to the working month and store it back
+ la >O	  	# if a > g, repeat and move up a month
+ ]sO
+
+# Handle adding a month to December
+[
+ lf 1 + sf	# Add one to the year
+ 1 sg 		# reset the month back to January
+]sN
+
+# Get the necessary values from the user and store them in the
+# right values
+[Start year (YYYY): ]n?sf
+[Start month (MM): ]n?sg
+[End year (YYYY): ]n?sd
+[End month (MM): ]n?se
+
+lf sa	   	 # Make a equal to the start year
+2012 sf	     	 # Make f equal to 2012 (our reference year)
+
+la 2012 >Q   	 # if 2012 > a, Q() to count down to it
+la 2012 <P	 # if 2012 < a, P() to count up to it
+
+la sf		 # Put the original start year back in f
+lg sa		 # save the start month
+1 sg		 # Make Jan the new month
+la 1 <O		 # if 1 < a, we don't start at January, O()
+     		 # call O() to count up to it
+la sg		 # put the original start month back in g
+
+# If this month has a Friday the 13 (c==0), call S() to say so
+[
+ lc 0 =S	 # if c==0, S() -- pretty print MM/DD/YYYY
+ lR x 		 # add the correct number of days for this month mod 7
+ lg 1 + d sg	 # add 1 to the month and save it back
+]sZ
+
+# Iterate through each month
+[
+ lZ x		# Call Z() to check if this is a Fri13 month,
+    		# and the move up to the next month
+ 12 <N		# if 12 < the value left by Z(), N() because
+    		# we just went December -> January
+ lf ld >M	# if end-year > current-year, M() -- call ourself again
+]sM
+
+# From the start Month and Year, check each month until the ending
+# Month and Year to see if they match
+[
+ lf ld >M	# if end-year > current-year, M() -- check the months
+       		# for Friday the 13ths
+		# When they are equal, we will check month-by-month
+		# for the last year here
+ lZ x		# Check the current month to see if it is a Fri13
+ le !<L		# if end-month !< the value left by Z(), L() -- call ourself 
+]sL
+
+lL x		# load L() -- the starting point for printing matches
