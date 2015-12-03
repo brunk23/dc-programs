@@ -1,4 +1,5 @@
-This program is the end result of a series of little additions.
+This program is the end result of a series of little additions to
+a simple tool that eventually turned into a complicated one.
 
 I almost always have a terminal open with dc running, for quick
 calculations, and I would often use it when grading tests. I wrote
@@ -36,8 +37,10 @@ using it, I would have done it in another language.  But, I figured
 it couldn't be "that" hard, if I used a sorted stack to hold the scores.
 
 I learned a lot about how dc handles stacks and unwinds them as macros
-return.  The following is some pseudo-code to help explain how this
-functions
+return.  The following is a more detailed description of the code that
+performs the creation of the sorted stack.
+
+
 
 # R() -- This is called to push the new value on the list
 # either because it's higher than everything on the list already
@@ -57,6 +60,8 @@ functions
  le Sl   # push the new value onto the list
  q       # makes U return without finishing
 ]sS
+
+
 
 # U() -- Save input in sorted stack for median calculations
 # This macro really abuses the working stack and recursion
@@ -87,3 +92,10 @@ functions
  lg 0 =R     # if we haven't call R() to put it on the list here
              # R() makes g = 1 so it only happens one time
 ]sU
+
+
+
+The median calculator works in a similar manner except simpler. It only
+needs to pop values off until it reaches the midpoint, then it prints
+the value of that (or grabs the next value and averages it to print if
+there are an even number of items on the list).
