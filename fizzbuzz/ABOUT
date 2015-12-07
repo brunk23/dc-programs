@@ -1,0 +1,3 @@
+I forget where I ran across the Fizz Buzz challenge for the first time.
+I saw that the example on rosettacode.org didn't really take advantage
+of the stack, so I rewrote it and removed some excess code and cruft.
