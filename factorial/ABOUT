@@ -1,0 +1,3 @@
+Use dc(1) to compute factorial values (4! = 4*3*2*1 = 24).
+This is especially suited for dc because the numbers can grow
+arbitrarily large without our needing to worry about their size

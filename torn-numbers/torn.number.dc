@@ -1,0 +1,21 @@
+#!/usr/bin/dc
+# Find all 4 digit numbers where (XX+YY)^2 = XXYY
+
+30sa	#  We start with 32, the first integer who square is 4 dig.
+99sf	#  We stop before 100, the square is 5 digits.
+
+# n() -- print solutions
+[la2^p]sn	# print found solution
+
+# x() -- search through the numbers
+[
+la	# load current number
+1+dsa	# increment it and save it
+2^	# square it
+d	# make a copy
+100%	# get the right most two digits
+r	# swap it for later
+100/	# get the left most two digits
++	# Add the left and right digit pairs
+la=n	# if the sum of (XX+YY)^2 = XXYY ... print it
+lalf>x]dsxx
