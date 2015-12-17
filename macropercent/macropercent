@@ -1,0 +1,23 @@
+#!/usr/bin/dc
+# Quick dc program to compute macros for keto diet
+# VARIABLES USED:
+#	c=carb calories
+#	f=fat calories
+#	p=protein calories
+#	t=total calories
+2k				# Set precision
+[Carb Grams: ]n?sc		# Get total carb calories
+[Fat Grams: ]n?sf		# Get total fat calories
+[Protein Grams: ]n?sp		# Get total protein calories
+lclp+4*lf9*+st			# Add the above amounts to get total calories
+400lc*lt/			# Compute %'s then pretty print
+400lp*lt/
+900lf*lt/[			
+Total Calories:		]nltn[
+Fat/Protein/Carbs:	]nn[% / ]nn[% / ]nn[%]p
+
+# Calculate the ketogenic ratio
+# Ketogenic values / anti-ketogenic values
+.9lf*.46lp*+			# 0.9 fat + 0.46 protein DIVIDED BY
+1.0lc*0.1lf*0.58lp*++/		# 1 carb + 0.1 fat + 0.58 protein
+[Ketogenic Ratio [>1.5]:	]np
