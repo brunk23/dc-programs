@@ -1,0 +1,10 @@
+#!/usr/bin/dc
+[How many days: ]n?
+d sa
+d 1+
+la 2+
+**6/
+[Total gifts (song): ]nn
+[
+Total gifts (no repeats): ]n
+la d 1+*2/p
