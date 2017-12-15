@@ -1,0 +1,42 @@
+#!/usr/bin/dc
+5k
+# Heritage study (1.39*BMI)+(0.16*Age)-(10.34*Gender)-9
+[lb1.39*la.16*lg10.34*9+-+]sH
+
+# Deurenberg 1 (1.2*BMI)+(0.23*Age)-(10.8*Gender)-5.4
+[lb1.2*la.23*lg10.8*5.4+-+]sD
+
+# Deurenberg 2 (1.29*BMI)+(0.2*Age)-(11.4*Gender)-8
+[lb1.29*la.2*lg11.4*8+-+]sE
+
+# Gallagher (1.46*BMI)+(0.14*Age)-(11.6*Gender)-10
+[lb1.46*la.14*lg11.6*10+-+]sG
+
+# Jackson-Pollock (1.61*BMI)+(0.13*Age)-(12.1*Gender)-13.9
+[lb1.61*la.13*lg12.1*13.9+-+]sJ
+
+# Combined (1.39*BMI)+(0.172*Age)-(11.248*Gender)-9.26
+[lb1.39*la.172*lg11.248*9.26+-+]sA
+
+[What is your age? ]n?sa
+[What is your BMI? ]n?sb
+[What is your gender (1 male, 0 female)? ]n?sg
+
+[ Heritage study: ]n
+lHxn[%
+]n
+[   Deurenberg 1: ]n
+lDxn[%
+]n
+[   Deurenberg 2: ]n
+lExn[%
+]n
+[      Gallagher: ]n
+lGxn[%
+]n
+[Jackson-Pollock: ]n
+lJxn[%
+]n
+[        Average: ]n
+lAxn[%
+]n
