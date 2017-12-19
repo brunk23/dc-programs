@@ -1,0 +1,12 @@
+#!/usr/bin/dc
+
+# A very simple dc program that returns the original
+# numbers if you input the sum and difference of the
+# two numbers
+
+[Sum: ]n?
+[Difference: ]n?dsb
++2/
+[First number: ]np
+lb-
+[Second number: ]np
