@@ -38,7 +38,7 @@
 # This function keeps track of what day of the week our current
 # month starts on
 [
- lc 31		# assume 31 days per month
+ lc 3		# assume 31 days per month 31%7=3
  lg 2 =V	# subtract 2 or 3, if Feb, depending on leap year
  lg 4 =Y	# -1 for April
  lg 6 =Y	# -1 for June
@@ -50,7 +50,7 @@
 # Moving down a year
 [
  lf 1 - sf	# subtract 1 from the working year
- lc 368		# load current count and 368 for days in a year
+ lc 4		# load current count and 368%7=4 for days in a year
  lV x		# Check if a leap year to subtract 2 or 3.
  - 7 % 7 + sc	# subtract from old c, mod 7, add 7 and store back in c
  lf la <Q  	# if a < f, repeat and move down another year
@@ -58,7 +58,7 @@
 
 # Moving up a year
 [
- 368		# 368 - 3 = 365, 368 - 2 = 366
+ 4		# 368 - 3 = 365, 368 - 2 = 366 (368%7 = 4)
  lV x		# Check if a leap year to subtract 2 or 3.
  lc + 7 % sc	# add to old c, mod 7, copy and store back in c
  lf 1 + d sf	# add 1 to the working year

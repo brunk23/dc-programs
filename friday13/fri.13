@@ -1,7 +1,7 @@
 #!/usr/bin/dc
 0k0sc[1-]sY[2-]sX[3-]sW[1+]sU[lgn[/13/]nlfp
-]sS[lf4%0=X]sT[lf4%0<Wlf100%0=Wlf400%0=Ulf100%0<T]sV[lc31lg2=V
-lg4=Ylg6=Ylg9=Ylg11=Y+7%dsc]sR[lf1-sflc368lVx-7%7+sclfla<Q]sQ[368
+]sS[lf4%0=X]sT[lf4%0<Wlf100%0=Wlf400%0=Ulf100%0<T]sV[lc3lg2=V
+lg4=Ylg6=Ylg9=Ylg11=Y+7%dsc]sR[lf1-sflc4lVx-7%7+sclfla<Q]sQ[4
 lVxlc+7%sclf1+dsfla>P]sP[lRxlg1+dsgla>O]sO[lf1+sf1sg]sN
 [Start year (YYYY): ]n?sf[Start month (MM): ]n?sg
 [End year (YYYY): ]n?sd[End month (MM): ]n?selfsa2012sfla2012>Qla
