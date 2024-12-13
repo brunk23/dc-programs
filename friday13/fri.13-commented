@@ -58,9 +58,9 @@
 
 # Moving up a year
 [
- 4		# 368 - 3 = 365, 368 - 2 = 366 (368%7 = 4)
+ lc 4		# load current count and 368-3=365, 368-2=366 (368%7=4)
  lV x		# Check if a leap year to subtract 2 or 3.
- lc + 7 % sc	# add to old c, mod 7, copy and store back in c
+ + 7 % sc	# add to old c, mod 7, copy and store back in c
  lf 1 + d sf	# add 1 to the working year
  la >P	  	# if a > f, repeat and move up another year
 ]sP
